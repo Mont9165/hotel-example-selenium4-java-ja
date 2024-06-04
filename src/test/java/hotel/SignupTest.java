@@ -1,6 +1,7 @@
 package hotel;
 
 import static hotel.Utils.BASE_URL;
+import static hotel.Utils.sleep;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -170,6 +171,30 @@ class SignupTest {
     signupPage.goToMyPageExpectingFailure();
 
     assertEquals("入力されたパスワードと一致しません。", signupPage.getPasswordConfirmationMessage());
+  }
+
+  @Test
+  @Order(6)
+  @DisplayName("現在日時よりも先の生年月日を入力した場合，エラーとなること")
+  void testSignupErrorBirthDateInvalid() {
+    driver.get(BASE_URL);
+    var topPage = new TopPage(driver);
+
+    var signupPage = topPage.goToSignupPage();
+    signupPage.setEmail("new-user@example.com");
+    signupPage.setPassword("password");
+    signupPage.setPasswordConfirmation("password");
+    signupPage.setUsername("テストテスト");
+    signupPage.setRank(Rank.一般会員);
+    signupPage.setAddress("千葉県千葉市");
+    signupPage.setTel("1234567890");
+    signupPage.setGender(Gender.その他);
+    signupPage.setBirthday(LocalDate.parse("2150-01-01"));
+    signupPage.setNotification(true);
+    signupPage.goToMyPageExpectingFailure();
+
+    assertEquals("適切な生年月日を入力してください。", signupPage.getBirthdayMessage());
+    sleep(1000);
   }
 
 }
