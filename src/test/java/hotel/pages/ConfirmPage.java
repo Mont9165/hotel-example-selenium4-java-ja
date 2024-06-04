@@ -83,6 +83,11 @@ public class ConfirmPage {
     return modalMessage.getText();
   }
 
+  public String getModalTitle() {
+    var modalTitle = driver.findElement(By.cssSelector("#success-modal .modal-title"));
+    return modalTitle.getText();
+  }
+
   public void close() {
     var closeButton = driver.findElement(By.cssSelector("#success-modal > div > div > div > button.btn-success"));
     closeButton.click();
