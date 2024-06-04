@@ -187,7 +187,7 @@ class SignupTest {
     signupPage.setUsername("テストテスト");
     signupPage.setRank(Rank.一般会員);
     signupPage.setAddress("千葉県千葉市");
-    signupPage.setTel("1234567890");
+    signupPage.setTel("12345678901");
     signupPage.setGender(Gender.その他);
     signupPage.setBirthday(LocalDate.parse("2150-01-01"));
     signupPage.setNotification(true);
