@@ -439,4 +439,185 @@ class ReserveTest {
     confirmPage.close();
     assertTrue(wait.until(ExpectedConditions.numberOfWindowsToBe(1)));
   }
+
+  @Test
+  @Order(11)
+  @DisplayName("不正な入力でエラーとなること_素泊まり")
+  void testInvalidInputNormalPlan() {
+    driver.get(BASE_URL);
+    var topPage = new TopPage(driver);
+    var originalHandles = driver.getWindowHandles();
+
+    var plansPage = topPage.goToPlansPage();
+    plansPage.openPlanByTitle("素泊まり");
+    sleep(500);
+    var newHandles = driver.getWindowHandles();
+    var newHandle = getNewWindowHandle(originalHandles, newHandles);
+    driver.switchTo().window(newHandle);
+    var reservePage = new ReservePage(driver);
+
+    var after90 = SHORT_FORMATTER.format(LocalDate.now().plusDays(91));
+
+    reservePage.setReserveDate(after90);
+    reservePage.setReserveTerm("10");
+    reservePage.setHeadCount("10");
+    reservePage.setUsername("テスト太郎"); // フォーカス移動
+
+    assertAll("エラーメッセージ",
+            () -> assertEquals("3ヶ月以内の日付を入力してください。", reservePage.getReserveDateMessage()),
+            () -> assertEquals("9以下の値を入力してください。", reservePage.getReserveTermMessage()),
+            () -> assertEquals("2以下の値を入力してください。", reservePage.getHeadCountMessage())
+    );
+  }
+
+  @Test
+  @Order(12)
+  @DisplayName("不正な入力でエラーとなること_出張ビジネスプラン")
+  void testInvalidInputBusinessPlan() {
+    driver.get(BASE_URL);
+    var topPage = new TopPage(driver);
+    var originalHandles = driver.getWindowHandles();
+
+    var plansPage = topPage.goToPlansPage();
+    plansPage.openPlanByTitle("出張ビジネスプラン");
+    sleep(500);
+    var newHandles = driver.getWindowHandles();
+    var newHandle = getNewWindowHandle(originalHandles, newHandles);
+    driver.switchTo().window(newHandle);
+    var reservePage = new ReservePage(driver);
+
+    var after90 = SHORT_FORMATTER.format(LocalDate.now().plusDays(91));
+
+    reservePage.setReserveDate(after90);
+    reservePage.setReserveTerm("10");
+    reservePage.setHeadCount("10");
+    reservePage.setUsername("テスト太郎"); // フォーカス移動
+
+    assertAll("エラーメッセージ",
+            () -> assertEquals("3ヶ月以内の日付を入力してください。", reservePage.getReserveDateMessage()),
+            () -> assertEquals("9以下の値を入力してください。", reservePage.getReserveTermMessage()),
+            () -> assertEquals("2以下の値を入力してください。", reservePage.getHeadCountMessage())
+    );
+  }
+
+  @Test
+  @Order(13)
+  @DisplayName("不正な入力でエラーとなること_エステマッサージプラン")
+  void testInvalidInputEstheticMassagePlan() {
+    driver.get(BASE_URL);
+    var topPage = new TopPage(driver);
+    var originalHandles = driver.getWindowHandles();
+
+    var plansPage = topPage.goToPlansPage();
+    plansPage.openPlanByTitle("エステ・マッサージプラン");
+    sleep(500);
+    var newHandles = driver.getWindowHandles();
+    var newHandle = getNewWindowHandle(originalHandles, newHandles);
+    driver.switchTo().window(newHandle);
+    var reservePage = new ReservePage(driver);
+
+    var after90 = SHORT_FORMATTER.format(LocalDate.now().plusDays(91));
+
+    reservePage.setReserveDate(after90);
+    reservePage.setReserveTerm("10");
+    reservePage.setHeadCount("10");
+    reservePage.setUsername("テスト太郎"); // フォーカス移動
+
+    assertAll("エラーメッセージ",
+            () -> assertEquals("3ヶ月以内の日付を入力してください。", reservePage.getReserveDateMessage()),
+            () -> assertEquals("9以下の値を入力してください。", reservePage.getReserveTermMessage()),
+            () -> assertEquals("6以下の値を入力してください。", reservePage.getHeadCountMessage())
+    );
+  }
+
+  @Test
+  @Order(14)
+  @DisplayName("不正な大きい入力でエラーとなること_カップル限定プラン")
+  void testInvalidBigInputCoupleOnlyPlan() {
+    driver.get(BASE_URL);
+    var topPage = new TopPage(driver);
+    var originalHandles = driver.getWindowHandles();
+
+    var plansPage = topPage.goToPlansPage();
+    plansPage.openPlanByTitle("カップル限定プラン");
+    sleep(500);
+    var newHandles = driver.getWindowHandles();
+    var newHandle = getNewWindowHandle(originalHandles, newHandles);
+    driver.switchTo().window(newHandle);
+    var reservePage = new ReservePage(driver);
+
+    var after90 = SHORT_FORMATTER.format(LocalDate.now().plusDays(91));
+
+    reservePage.setReserveDate(after90);
+    reservePage.setReserveTerm("10");
+    reservePage.setHeadCount("10");
+    reservePage.setUsername("テスト太郎"); // フォーカス移動
+
+    assertAll("エラーメッセージ",
+            () -> assertEquals("3ヶ月以内の日付を入力してください。", reservePage.getReserveDateMessage()),
+            () -> assertEquals("2以下の値を入力してください。", reservePage.getReserveTermMessage()),
+            () -> assertEquals("2以下の値を入力してください。", reservePage.getHeadCountMessage())
+    );
+  }
+
+  @Test
+  @Order(15)
+  @DisplayName("不正な小さい入力でエラーとなること_カップル限定プラン")
+  void testInvalidSmallInputCoupleOnlyPlan() {
+    driver.get(BASE_URL);
+    var topPage = new TopPage(driver);
+    var originalHandles = driver.getWindowHandles();
+
+    var plansPage = topPage.goToPlansPage();
+    plansPage.openPlanByTitle("カップル限定プラン");
+    sleep(500);
+    var newHandles = driver.getWindowHandles();
+    var newHandle = getNewWindowHandle(originalHandles, newHandles);
+    driver.switchTo().window(newHandle);
+    var reservePage = new ReservePage(driver);
+
+    var after90 = SHORT_FORMATTER.format(LocalDate.now().plusDays(91));
+
+    reservePage.setReserveDate(after90);
+    reservePage.setReserveTerm("10");
+    reservePage.setHeadCount("1");
+    reservePage.setUsername("テスト太郎"); // フォーカス移動
+
+    assertAll("エラーメッセージ",
+            () -> assertEquals("3ヶ月以内の日付を入力してください。", reservePage.getReserveDateMessage()),
+            () -> assertEquals("2以下の値を入力してください。", reservePage.getReserveTermMessage()),
+            () -> assertEquals("2以上の値を入力してください。", reservePage.getHeadCountMessage())
+    );
+  }
+
+  @Test
+  @Order(16)
+  @DisplayName("不正な入力でエラーとなること_テーマパーク優待プラン")
+  void testInvalidSInputThemeParkDiscountPlan() {
+    driver.get(BASE_URL);
+    var topPage = new TopPage(driver);
+    var originalHandles = driver.getWindowHandles();
+
+    var plansPage = topPage.goToPlansPage();
+    plansPage.openPlanByTitle("テーマパーク優待プラン");
+    sleep(500);
+    var newHandles = driver.getWindowHandles();
+    var newHandle = getNewWindowHandle(originalHandles, newHandles);
+    driver.switchTo().window(newHandle);
+    var reservePage = new ReservePage(driver);
+
+    var after90 = SHORT_FORMATTER.format(LocalDate.now().plusDays(91));
+
+    reservePage.setReserveDate(after90);
+    reservePage.setReserveTerm("10");
+    reservePage.setHeadCount("10");
+    reservePage.setUsername("テスト太郎"); // フォーカス移動
+
+    assertAll("エラーメッセージ",
+            () -> assertEquals("3ヶ月以内の日付を入力してください。", reservePage.getReserveDateMessage()),
+            () -> assertEquals("5以下の値を入力してください。", reservePage.getReserveTermMessage()),
+            () -> assertEquals("9以下の値を入力してください。", reservePage.getHeadCountMessage())
+    );
+  }
+
 }
