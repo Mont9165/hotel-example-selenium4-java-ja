@@ -52,3 +52,7 @@ gradlew.bat clean test
 #### v2021.3.0 (2021-03-22)
 
 * First release
+
+#### 2024/06/05
+* SignupTest.javaにtestSignupErrorBirthDateInvalidメソッドを追加（現在はテスト失敗になるため，[#1](https://github.com/Mont9165/hotel-example-selenium4-java-ja/issues/1)を対処する必要がある）
+* ReserveTest.javaに各プランのテストケースを追加
